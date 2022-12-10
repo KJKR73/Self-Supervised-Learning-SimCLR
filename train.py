@@ -34,12 +34,13 @@ def ss_one_epoch(epoch, model, scaler, loader, loss_fxn, optimizer, config):
     average_top1 = AverageMeter()
     average_top5 = AverageMeter()
     
-    # Start the model training 
-    if config.SETTING == "HPLT":
-        bar = tqdm(loader, total=10)
-    else:
-        bar = tqdm(loader, total=len(loader))
-    
+    # # Start the model training 
+    # if config.SETTING == "HPLT":
+    #     bar = tqdm(loader, total=10)
+    # else:
+    #     bar = tqdm(loader, total=len(loader))
+
+    bar = tqdm(loader, total=len(loader))
     # Loop and train the model
     for batch_idx, (img_out, _) in enumerate(bar, 1):
         # Collect the images
@@ -71,10 +72,10 @@ def ss_one_epoch(epoch, model, scaler, loader, loss_fxn, optimizer, config):
         # Print the loss on the go
         bar.set_description(f"Epoch : {epoch} | Loss : {round(loss_meter.avg, ndigits=4)} | Acc-top1 : {round(average_top1.avg,ndigits=4)} | Acc-top5 : {round(average_top5.avg, ndigits=4)}")
 
-        # Stop the data
-        if config.SETTING == "HPLT":
-            if batch_idx == 11:
-                break
+        # # Stop the data
+        # if config.SETTING == "HPLT":
+        #     if batch_idx == 11:
+        #         break
         
     return loss_meter.avg, average_top1.avg, average_top5.avg
 
