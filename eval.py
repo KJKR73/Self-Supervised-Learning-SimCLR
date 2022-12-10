@@ -1,4 +1,5 @@
 import os
+import gc
 import copy
 import torch
 import random
@@ -159,6 +160,10 @@ def EvalEngineNormal(config, weight_path):
     fin_score = "\n".join(best_data)
     print()
     print(fin_score)
+
+    del model, train_loader, val_loader
+    torch.cuda.empty_cache()
+    gc.collect()
 
     return best_score
 

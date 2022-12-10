@@ -1,4 +1,5 @@
 import os
+import gc
 import torch
 import random
 import numpy as np
@@ -118,5 +119,9 @@ def TrainingEngineSSCL(config, transforms):
     # Add to the report
     with open(f"{config.SETTING}/{config.FOLDER_NAME}/log_{config.ARCH}_{config.ADD_TXT}.txt", "w") as f:
         f.write("\n".join(list_score))
+
+    del model, loader
+    torch.cuda.empty_cache()
+    gc.collect()
 
     return f"{config.SETTING}/{config.FOLDER_NAME}/weight_{config.ARCH}_{config.ADD_TXT}.pth", last_epoch_score

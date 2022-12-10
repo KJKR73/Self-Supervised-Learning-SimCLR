@@ -10,7 +10,7 @@ def get_simclr_dataset(transforms, config):
     if config.DATASET == "cifar-10":
         dataset = datasets.CIFAR10(root_folder, train=True, transform=AugmentWithViews(transforms, config.VIEWS), download=True)
     elif config.DATASET == "stl-10":
-        dataset = datasets.STL10(root_folder, split='unlabeled', transform=AugmentWithViews(transforms, config.VIEWS), download=False)
+        dataset = datasets.STL10(root_folder, split='unlabeled', transform=AugmentWithViews(transforms, config.VIEWS), download=True)
     else:
         pass
     
@@ -19,7 +19,6 @@ def get_simclr_dataset(transforms, config):
                                          batch_size=config.BATCH_SIZE,
                                          drop_last=True,
                                          num_workers=12,
-                                         pin_memory=True,
                                          shuffle=True)
     
     return loader
